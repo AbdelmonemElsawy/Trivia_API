@@ -95,6 +95,16 @@ GET '/categories'
 
 - Authentication: This version of the application does not require authentication or API keys.
 
+### Error Handling
+Errors are returned as JSON objects.
+Example of error format:
+```
+{
+    "success": False,
+    "error": 500,
+    "message": "Internal server error"
+}
+```
 ## Testing
 To run the tests, run
 ```
