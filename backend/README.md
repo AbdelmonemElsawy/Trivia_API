@@ -98,13 +98,234 @@ GET '/categories'
 ### Error Handling
 Errors are returned as JSON objects.
 Example of error format:
-```
+```json
 {
     "success": False,
     "error": 500,
     "message": "Internal server error"
 }
 ```
+The api will send one the following error types when the request fails.
+-400: Bad Request
+-404: Resource Not Found
+-422: Not Processable
+-500: Internal server error
+
+### Endpoints
+#### GET /categories
+-General:
+    -An endpoint to handle GET requests for all available categories which returns a dictionary of categories where the category id is the key and the type is the value.
+-Example: ``` curl http://127.0.0.1:5000/categories ```
+```json
+{
+  "categories": {
+    "1": "Science",
+    "2": "Art",
+    "3": "Geography",
+    "4": "History",
+    "5": "Entertainment",
+    "6": "Sports"
+  }
+}
+```
+
+#### GET /questions
+-General:
+    -An endpoint to  handle GET request for all questions.
+    -Questions are paginated in groups of 10.
+    -It also returns list of all categories and the total number of questions.
+-Example: ``` curl http://127.0.0.1:5000/questions ```
+```json
+{
+  "categories": {
+    "1": "Science",
+    "2": "Art",
+    "3": "Geography",
+    "4": "History",
+    "5": "Entertainment",
+    "6": "Sports"
+  },
+  "category": 0,
+  "questions": [
+    {
+      "answer": "Tom Cruise",
+      "category": 5,
+      "difficulty": 4,
+      "id": 4,
+      "question": "What actor did author Anne Rice first denounce, then praise in the role of her beloved Lestat?"
+    },
+    {
+      "answer": "Maya Angelou",
+      "category": 4,
+      "difficulty": 2,
+      "id": 5,
+      "question": "Whose autobiography is entitled 'I Know Why the Caged Bird Sings'?"
+    },
+    {
+      "answer": "Muhammad Ali",
+      "category": 4,
+      "difficulty": 1,
+      "id": 9,
+      "question": "What boxer's original name is Cassius Clay?"
+    },
+    {
+      "answer": "Brazil",
+      "category": 6,
+      "difficulty": 3,
+      "id": 10,
+      "question": "Which is the only team to play in every soccer World Cup tournament?"
+    },
+    {
+      "answer": "Uruguay",
+      "category": 6,
+      "difficulty": 4,
+      "id": 11,
+      "question": "Which country won the first ever soccer World Cup in 1930?"
+    },
+    {
+      "answer": "George Washington Carver",
+      "category": 4,
+      "difficulty": 2,
+      "id": 12,
+      "question": "Who invented Peanut Butter?"
+    },
+    {
+      "answer": "Lake Victoria",
+      "category": 3,
+      "difficulty": 2,
+      "id": 13,
+      "question": "What is the largest lake in Africa?"
+    },
+    {
+      "answer": "The Palace of Versailles",
+      "category": 3,
+      "difficulty": 3,
+      "id": 14,
+      "question": "In which royal palace would you find the Hall of Mirrors?"
+    },
+    {
+      "answer": "Agra",
+      "category": 3,
+      "difficulty": 2,
+      "id": 15,
+      "question": "The Taj Mahal is located in which Indian city?"
+    },
+    {
+      "answer": "Escher",
+      "category": 2,
+      "difficulty": 1,
+      "id": 16,
+      "question": "Which Dutch graphic artist\u2013initials M C was a creator of optical illusions?"
+    }
+  ],
+  "total_questions": 21
+}
+```
+
+#### DELETE /questions/<int:question_id>
+-General:
+    -An endpoint to handle DELETE request to delete particular question which ID is equal to question_id.
+    -Returns the id of the deleted question and whether the process succeded or not.
+-Example: ``` curl -X DELETE http://127.0.0.1:5000/questions/20 ```
+```json
+{
+  "deleted": 20,
+  "success": true
+}
+
+```
+
+#### POST /submit
+-General:
+    -an endpoint to POST a new question. It requires the question body, answer, difficulty and category.
+    -Returns whether the process succeded or not.
+-Example: ``` curl -X POST http://127.0.0.1:5000/submit -H "Content-Type: application/json" -d '{"question":"In which country are the Pyramids?", "answer":"Egypt", "difficulty":"2", "category":"3"}' ```
+```json
+{
+  "success": true
+}
+```
+
+#### POST /questions
+-General:
+    -An endpoint to get questions based on a search term.
+    -Questions are paginated in groups of 10.
+    -
+-Example: ``` curl -X POST http://127.0.0.1:5000/questions -H "Content-Type: application/json" -d '{"searchTerm":"won world cup"}' ```
+```json
+{
+    "current_category": 0,
+    "questions": [
+        {
+            "answer": "France",
+            "category": 6,
+            "difficulty": 2,
+            "id": 19,
+            "question": "what team won world cup 2018?"
+        },
+        {
+            "answer": "Germany.",
+            "category": 6,
+            "difficulty": 5,
+            "id": 20,
+            "question": "what team won world cup 2014?"
+        },
+        {
+            "answer": "Spain.",
+            "category": 6,
+            "difficulty": 3,
+            "id": 21,
+            "question": "what team won world cup 2010?"
+        },
+        {
+            "answer": "Italy.",
+            "category": 6,
+            "difficulty": 5,
+            "id": 18,
+            "question": "what team won world cup 2006?"
+        }
+    ],
+    "total_questions": 4
+}
+
+```
+
+#### GET /categories/<int:category_id>/questions
+-General:
+    -An endpoint to get questions of a particular category.
+    -Questions are paginated in groups of 10.
+    -
+-Example: ``` curl http://127.0.0.1:5000/categories/3/questions ```
+```json
+{
+  "category": 3,
+  "questions": [
+    {
+      "answer": "Lake Victoria",
+      "category": 3,
+      "difficulty": 2,
+      "id": 13,
+      "question": "What is the largest lake in Africa?"
+    },
+    {
+      "answer": "The Palace of Versailles",
+      "category": 3,
+      "difficulty": 3,
+      "id": 14,
+      "question": "In which royal palace would you find the Hall of Mirrors?"
+    },
+    {
+      "answer": "Agra",
+      "category": 3,
+      "difficulty": 2,
+      "id": 15,
+      "question": "The Taj Mahal is located in which Indian city?"
+    }
+  ],
+  "total_questions": 3
+}
+```
+
 ## Testing
 To run the tests, run
 ```
