@@ -88,6 +88,9 @@ GET '/categories'
 '6' : "Sports"}
 
 ```
+## API Reference
+
+### Geting Started
 
 
 ## Testing
