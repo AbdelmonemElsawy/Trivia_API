@@ -32,10 +32,10 @@ class TriviaTestCase(unittest.TestCase):
             self.db.create_all()
 
         self.new_question = {
-            'question': "Which Football team did win FIFA world cup 2010?",
-            'answer': "Spain.",
-            'difficulty': 3,
-            'category': 6
+            "question": "This is question?",
+            "answer": "this is answer.",
+            "difficulty": 3,
+            "category": 3
         }
     
     def tearDown(self):
@@ -92,7 +92,6 @@ class TriviaTestCase(unittest.TestCase):
     def test_submit_question(self):
         result = self.client().post('/submit', json=self.new_question)
         data = json.loads(result.data)
-
 
         self.assertEqual(result.status_code, 200)
         self.assertTrue(data['success'])

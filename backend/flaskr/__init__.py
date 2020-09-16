@@ -126,8 +126,7 @@ def create_app(test_config=None):
     difficulty = body.get('difficulty', None)
 
     try:
-      new_question =Question(question=question, answer=answer,\
-        category=category, difficulty=difficulty)
+      new_question =Question(question=question, answer=answer, category=category, difficulty=difficulty)
         
       new_question.insert()
       return jsonify({
